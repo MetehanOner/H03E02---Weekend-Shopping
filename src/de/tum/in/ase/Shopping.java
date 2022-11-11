@@ -9,8 +9,7 @@ public final class Shopping {
 
 	public Shopping(Item[] shoppingList, int bagCapacity) {
 		this.shoppingList = shoppingList;
-		this.bagCapacity = bagCapacity;
-
+		setBagCapacity(bagCapacity);
 
 	}
 
@@ -18,8 +17,8 @@ public final class Shopping {
 	public int search(String itemName){
 		int i = 0;
 		boolean found = false;
-		int index = 0;
-		while (!found && i < this.getShoppingList().length) {
+
+		while (!found && i < shoppingList.length) {
 			String a = getShoppingList()[i].getName().toLowerCase().replaceAll("\\s+", "");
 			String b = itemName.toLowerCase().replaceAll("\\s+", "");
 			found = Objects.equals(a ,b);
