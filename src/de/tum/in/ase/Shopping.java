@@ -10,24 +10,27 @@ public final class Shopping {
 	public Shopping(Item[] shoppingList, int bagCapacity) {
 		this.shoppingList = shoppingList;
 		this.bagCapacity = bagCapacity;
+
+
 	}
 
 	// TODO: implement search(String itemName)
 	public int search(String itemName){
 		int i = 0;
 		boolean found = false;
-
-		while(!found && i < getShoppingList().length) {
+		int index = 0;
+		while (!found && i < this.getShoppingList().length) {
 			String a = getShoppingList()[i].getName().toLowerCase().replaceAll("\\s+", "");
 			String b = itemName.toLowerCase().replaceAll("\\s+", "");
 			found = Objects.equals(a ,b);
+			i = index;
 			i++;
 		}
 
 		if(!found){
 			return -1;
 		} else {
-			return i;
+			return index;
 		}
 
 	}
