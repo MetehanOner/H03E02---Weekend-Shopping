@@ -23,14 +23,13 @@ public final class Shopping {
 			String a = getShoppingList()[i].getName().toLowerCase().replaceAll("\\s+", "");
 			String b = itemName.toLowerCase().replaceAll("\\s+", "");
 			found = Objects.equals(a ,b);
-			i = index;
 			i++;
 		}
 
 		if(!found){
 			return -1;
 		} else {
-			return index;
+			return i-1;
 		}
 
 	}
