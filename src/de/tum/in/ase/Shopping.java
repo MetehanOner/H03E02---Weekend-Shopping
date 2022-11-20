@@ -1,6 +1,7 @@
 package de.tum.in.ase;
 
 
+import java.util.Arrays;
 import java.util.Objects;
 
 public final class Shopping {
@@ -18,7 +19,7 @@ public final class Shopping {
 		int i = 0;
 		boolean found = false;
 
-		if(getShoppingList()==null){
+		if(getShoppingList()==null) {
 			return -1;
 		}
 
@@ -81,10 +82,68 @@ public final class Shopping {
 
 
 	// TODO: implement fillBagMax()
+	public Item[] fillBagMax(){
+
+		if (getShoppingList() == null) {
+			return null;
+		}
+
+		Item[] copy = new Item[getShoppingList().length];
+
+		int curWt = 0;
+		int curVal = 0;
+		int totalValue = 0;
+		int curBg = getBagCapacity();
+
+		for(int i=0; i < getShoppingList().length; i++){
+			if(!(getShoppingList()[i] == null)){
+
+				int currentItemValue = getShoppingList()[i].getValue();
+
+				if (curBg - curWt >= 0) {
+
+					int j = 0;
+					while (j < i && currentItemValue > copy[j].getValue()) {
+						j++;
+					}
+
+					for (int k = i - 1; k >= j; k--) {
+						copy[k + 1] = copy[k];
+					}
+
+					copy[j] = getShoppingList()[i];
+					curWt = copy[j].getWeight();
+					curVal = copy[j].getValue();
+
+					curBg = getBagCapacity() - curWt;
+					totalValue += curVal;
+				}
+
+			}
+		}
+
+		return copy;
+	}
 
 
 
 	// TODO: implement calValue()
+	public int calValue(){
+
+		if(getShoppingList()==null){
+			return 0;
+		}
+
+		Item[] newList = fillBagMax();
+
+		int totalValue = 0;
+		for(int i=0; i < newList.length; i++){
+			totalValue += newList[i].getValue();
+		}
+
+		return totalValue;
+
+	}
 
 
 
@@ -109,6 +168,7 @@ public final class Shopping {
 		System.out.println(cool);
 		System.out.println(s.findMin());
 		System.out.println(s.findMax());
+		System.out.println(Arrays.toString(s.fillBagMax()));
 
 	}
 
