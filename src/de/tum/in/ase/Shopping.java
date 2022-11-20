@@ -17,6 +17,7 @@ public final class Shopping {
 	public int search(String itemName){
 		int i = 0;
 		boolean found = false;
+
 		if(getShoppingList()==null){
 			return -1;
 		}
@@ -38,6 +39,10 @@ public final class Shopping {
 
 	// TODO: implement findMin()
 	public int findMin(){
+		if(getShoppingList()==null){
+			return -1;
+		}
+
 		Item result = getShoppingList()[0];
 		int index = 0;
 		for (int i = 1; i < getShoppingList().length; i++) {
@@ -49,15 +54,16 @@ public final class Shopping {
 			}
 		}
 
-		if(getShoppingList() == null){
-			return -1;
-		} else {
-			return index;
-		}
+		return index;
+
 	}
 
 	// TODO: implement findMax()
 	public int findMax(){
+		if(getShoppingList() == null){
+			return -1;
+		}
+
 		Item result = getShoppingList()[0];
 		int index = 0;
 		for (int i = 1; i < getShoppingList().length; i++) {
@@ -69,15 +75,13 @@ public final class Shopping {
 			}
 		}
 
-		if(getShoppingList() == null){
-			return -1;
-		} else {
-			return index;
-		}
+		return index;
+
 	}
 
 
 	// TODO: implement fillBagMax()
+
 
 
 	// TODO: implement calValue()
