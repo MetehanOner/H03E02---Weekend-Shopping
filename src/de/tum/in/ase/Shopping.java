@@ -17,6 +17,9 @@ public final class Shopping {
 	public int search(String itemName){
 		int i = 0;
 		boolean found = false;
+		if(getShoppingList()==null){
+			return -1;
+		}
 
 		while (!found && i < getShoppingList().length) {
 			String a = getShoppingList()[i].getName().toLowerCase().replaceAll("\\s+", "");
