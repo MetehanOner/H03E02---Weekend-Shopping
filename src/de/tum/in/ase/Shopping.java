@@ -8,8 +8,8 @@ public final class Shopping {
 	private int bagCapacity;
 
 	public Shopping(Item[] shoppingList, int bagCapacity) {
-		this.shoppingList = shoppingList;
-		this.bagCapacity = bagCapacity;
+		setBagCapacity(bagCapacity);
+		this.shoppingList  = shoppingList;
 
 	}
 
@@ -34,9 +34,40 @@ public final class Shopping {
 	}
 
 	// TODO: implement findMin()
+	public int findMin(){
+		Item result = getShoppingList()[0];
+		int index = 0;
+		for (int i = 1; i < getShoppingList().length; i++) {
+			if (getShoppingList()[i].getValue() < result.getValue()) {
+				result = getShoppingList()[i];
+				index = i;
+			}
+		}
 
+		if(getShoppingList() == null){
+			return -1;
+		} else {
+			return index;
+		}
+	}
 
 	// TODO: implement findMax()
+	public int findMax(){
+		Item result = getShoppingList()[0];
+		int index = 0;
+		for (int i = 1; i < getShoppingList().length; i++) {
+			if (getShoppingList()[i].getValue() > result.getValue()) {
+				result = getShoppingList()[i];
+				index = i;
+			}
+		}
+
+		if(getShoppingList() == null){
+			return -1;
+		} else {
+			return index;
+		}
+	}
 
 
 	// TODO: implement fillBagMax()
@@ -48,20 +79,24 @@ public final class Shopping {
 
 	public static void main(String[] args) {
 		//you can test your code here by creating your own shopping object
-		Item a = new Item("hafer", 1, 5);
-		Item b = new Item("salat", 4, 3);
-		Item c = new Item("banana", 3, 8);
+		Item a = new Item("hafer", 1, 8);
+		Item b = new Item("salat", 4, 200);
+		Item c = new Item("banana", 3, 500);
+		Item d = new Item("salat", 4, 2);
 
-		Item[] items = new Item[3];
+		Item[] items = new Item[4];
 		items[0] = a;
 		items[1] = b;
 		items[2] = c;
+		items[3] = d;
 
 		Shopping s = new Shopping(items, 10);
-		int cool = s.search("SA LAT");
+		int cool = s.search("hafer");
 
-		System.out.print(cool);
 
+		System.out.println(cool);
+		System.out.println(s.findMin());
+		System.out.println(s.findMax());
 
 	}
 
