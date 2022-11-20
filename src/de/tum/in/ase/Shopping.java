@@ -38,9 +38,11 @@ public final class Shopping {
 		Item result = getShoppingList()[0];
 		int index = 0;
 		for (int i = 1; i < getShoppingList().length; i++) {
-			if (getShoppingList()[i].getValue() < result.getValue()) {
-				result = getShoppingList()[i];
-				index = i;
+			if(!(getShoppingList()[i] ==null)){
+				if (getShoppingList()[i].getValue() < result.getValue()) {
+					result = getShoppingList()[i];
+					index = i;
+				}
 			}
 		}
 
@@ -56,9 +58,11 @@ public final class Shopping {
 		Item result = getShoppingList()[0];
 		int index = 0;
 		for (int i = 1; i < getShoppingList().length; i++) {
-			if (getShoppingList()[i].getValue() > result.getValue()) {
-				result = getShoppingList()[i];
-				index = i;
+			if(!(getShoppingList()[i] == null)) {
+				if (getShoppingList()[i].getValue() > result.getValue()) {
+					result = getShoppingList()[i];
+					index = i;
+				}
 			}
 		}
 
@@ -84,11 +88,12 @@ public final class Shopping {
 		Item c = new Item("banana", 3, 500);
 		Item d = new Item("salat", 4, 2);
 
-		Item[] items = new Item[4];
+		Item[] items = new Item[8];
 		items[0] = a;
-		items[1] = b;
+
 		items[2] = c;
-		items[3] = d;
+		items[7] = d;
+		items[4] = b;
 
 		Shopping s = new Shopping(items, 10);
 		int cool = s.search("hafer");
