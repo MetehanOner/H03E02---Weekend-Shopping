@@ -102,7 +102,7 @@ public final class Shopping {
 
 				int currentItemValue = getShoppingList()[i].getValue();
 
-				if(getShoppingList()[i].getWeight() < currentBagCapacity){
+				if(getShoppingList()[i].getWeight() <= currentBagCapacity){
 
 					int j = 0;
 					while (j < i && currentItemValue < copy[j].getValue()) {
