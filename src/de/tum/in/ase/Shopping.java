@@ -95,21 +95,27 @@ public final class Shopping {
 			copy[z] = itemHolder;
 		}
 
+		int currentBagCapacity = getBagCapacity();
+
 		for(int i=0; i < getShoppingList().length; i++){
 			if(!(getShoppingList()[i] == null)){
 
-				double currentRatio = (double) (getShoppingList()[i].getValue())/ (double) (getShoppingList()[i].getWeight());
+				int currentItemValue = getShoppingList()[i].getValue();
 
-				int j = 0;
-				while (j < i && currentRatio < (double) (copy[j].getValue())/ (double) (copy[j].getWeight())) {
-					j++;
+				if(getShoppingList()[i].getWeight() < currentBagCapacity){
+
+					int j = 0;
+					while (j < i && currentItemValue < copy[j].getValue()) {
+						j++;
+					}
+
+					for (int k = i - 1; k >= j; k--) {
+						copy[k + 1] = copy[k];
+					}
+
+					copy[j] = getShoppingList()[i];
+					currentBagCapacity = currentBagCapacity - copy[j].getWeight();
 				}
-
-				for (int k = i - 1; k >= j; k--) {
-					copy[k + 1] = copy[k];
-				}
-
-				copy[j] = getShoppingList()[i];
 
 			} else {
 				getShoppingList()[i] = itemHolder;
@@ -128,36 +134,8 @@ public final class Shopping {
 
 		int firstNull = r-1;
 		Item[] modifiedArray = Arrays.copyOfRange(copy, 0, firstNull);
-		Item[] newFoundLand = new Item[modifiedArray.length];
 
-
-		for(int p=0; p < newFoundLand.length; p++) {
-			newFoundLand[p] = itemHolder;
-		}
-
-		int currentBagCapacity = getBagCapacity();
-		for(int i=0; i < newFoundLand.length; i++){
-				if(!(modifiedArray[i].getWeight() > currentBagCapacity)){
-
-						newFoundLand[i] = modifiedArray[i];
-						currentBagCapacity = currentBagCapacity - newFoundLand[i].getWeight();
-
-				}
-		}
-
-		int o = 0;
-		boolean evreka = false;
-
-		while (!evreka && o < newFoundLand.length) {
-			String a = newFoundLand[o].getName().toLowerCase().replaceAll("\\s+", "");
-			String b = "null".toLowerCase().replaceAll("\\s+", "");
-			evreka = Objects.equals(a ,b);
-			o++;
-		}
-
-		int partyNull = o-1;
-
-		return Arrays.copyOfRange(newFoundLand, 0, partyNull);
+		return modifiedArray;
 	}
 
 
