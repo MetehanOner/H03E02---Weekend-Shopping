@@ -88,7 +88,7 @@ public final class Shopping {
 			return null;
 		}
 
-		Item itemHolder = new Item("null",1,0);
+		Item itemHolder = new Item("null",9999999,0);
 		Item[] copy = new Item[getShoppingList().length];
 
 		for(int z=0; z < copy.length; z++) {
