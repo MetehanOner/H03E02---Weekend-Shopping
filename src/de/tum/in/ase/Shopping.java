@@ -171,9 +171,7 @@ public final class Shopping {
 			o++;
 		}
 
-		int partyNull = o-1;
-
-		return Arrays.copyOfRange(master, 0, partyNull);
+		return Arrays.copyOfRange(master, 0, o);
 	}
 
 
