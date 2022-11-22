@@ -98,10 +98,10 @@ public final class Shopping {
 		for(int i=0; i < getShoppingList().length; i++){
 			if(!(getShoppingList()[i] == null)){
 
-				int currentRatio = (getShoppingList()[i].getValue())/(getShoppingList()[i].getWeight());
+				double currentRatio = (double) (getShoppingList()[i].getValue())/(double)(getShoppingList()[i].getWeight());
 
 				int j = 0;
-				while (j < i && currentRatio < (copy[j].getValue())/(copy[j].getWeight())) {
+				while (j < i && currentRatio < (double) (copy[j].getValue())/(double) (copy[j].getWeight())) {
 					j++;
 				}
 
