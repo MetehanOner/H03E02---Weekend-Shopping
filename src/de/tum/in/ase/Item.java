@@ -6,9 +6,15 @@ public class Item {
 	private int value;
 
 	public Item(String name, int weight, int value) {
-		this.name = name;
-		this.weight = weight;
-		this.value = value;
+
+		if (name == null){
+			setName("null");
+		} else {
+			setName(name);
+		}
+
+		setWeight(weight);
+		setValue(value);
 	}
 
 	public String getName() {
@@ -21,5 +27,17 @@ public class Item {
 
 	public int getValue() {
 		return value;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public void setWeight(int weight) {
+		this.weight = weight;
+	}
+
+	public void setValue(int value) {
+		this.value = value;
 	}
 }

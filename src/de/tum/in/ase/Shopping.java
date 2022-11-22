@@ -88,41 +88,74 @@ public final class Shopping {
 			return null;
 		}
 
+		Item itemHolder = new Item("null",1000000000,0);
 		Item[] copy = new Item[getShoppingList().length];
 
-		int curWt = 0;
-		int curVal = 0;
-		int totalValue = 0;
-		int curBg = getBagCapacity();
+		for(int z=0; z < copy.length; z++) {
+			copy[z] = itemHolder;
+		}
 
 		for(int i=0; i < getShoppingList().length; i++){
 			if(!(getShoppingList()[i] == null)){
 
-				int currentItemValue = getShoppingList()[i].getValue();
+				double currentRatio = (double)(getShoppingList()[i].getValue())/(double)(getShoppingList()[i].getWeight());
 
-				if (curBg - curWt >= 0) {
-
-					int j = 0;
-					while (j < i && currentItemValue > copy[j].getValue()) {
-						j++;
-					}
-
-					for (int k = i - 1; k >= j; k--) {
-						copy[k + 1] = copy[k];
-					}
-
-					copy[j] = getShoppingList()[i];
-					curWt = copy[j].getWeight();
-					curVal = copy[j].getValue();
-
-					curBg = getBagCapacity() - curWt;
-					totalValue += curVal;
+				int j = 0;
+				while (j < i && currentRatio < (double)(copy[j].getValue())/(double)(copy[j].getWeight())) {
+					j++;
 				}
 
+				for (int k = i - 1; k >= j; k--) {
+					copy[k + 1] = copy[k];
+				}
+
+				copy[j] = getShoppingList()[i];
+
+			} else {
+				getShoppingList()[i] = itemHolder;
 			}
 		}
 
-		return copy;
+		int r = 0;
+		boolean found = false;
+
+		while (!found && r < copy.length) {
+			String a = copy[r].getName().toLowerCase().replaceAll("\\s+", "");
+			String b = "null".toLowerCase().replaceAll("\\s+", "");
+			found = Objects.equals(a ,b);
+			r++;
+		}
+
+		int firstNull = r-1;
+		Item[] modifiedArray = Arrays.copyOfRange(copy, 0, firstNull);
+		Item[] newFoundLand = new Item[modifiedArray.length];
+
+
+		for(int p=0; p < newFoundLand.length; p++) {
+			newFoundLand[p] = itemHolder;
+		}
+
+		int currentBagCapacity = getBagCapacity();
+		for(int i=0; i < modifiedArray.length; i++){
+				if(currentBagCapacity > modifiedArray[i].getWeight()){
+					newFoundLand[i] = modifiedArray[i];
+					currentBagCapacity = currentBagCapacity - newFoundLand[i].getWeight();
+				}
+		}
+
+		int o = 0;
+		boolean evreka = false;
+
+		while (!evreka && o < newFoundLand.length) {
+			String a = newFoundLand[o].getName().toLowerCase().replaceAll("\\s+", "");
+			String b = "null".toLowerCase().replaceAll("\\s+", "");
+			evreka = Objects.equals(a ,b);
+			o++;
+		}
+
+		int partyNull = o-1;
+
+		return Arrays.copyOfRange(newFoundLand, 0, partyNull);
 	}
 
 
@@ -136,30 +169,34 @@ public final class Shopping {
 
 		Item[] newList = fillBagMax();
 
-		int totalValue = 0;
-		for(int i=0; i < newList.length; i++){
-			totalValue += newList[i].getValue();
+		if (!(newList==null)) {
+			int totalValue = 0;
+			for(int i=0; i < newList.length; i++){
+				if(!(newList[i] == null)){
+					totalValue = totalValue + newList[i].getValue();
+				}
+			}
+			return totalValue;
 		}
-
-		return totalValue;
+		return 0;
 
 	}
 
 
-
 	public static void main(String[] args) {
 		//you can test your code here by creating your own shopping object
-		Item a = new Item("hafer", 1, 8);
-		Item b = new Item("salat", 4, 200);
-		Item c = new Item("banana", 3, 500);
-		Item d = new Item("salat", 4, 2);
+		Item a = new Item("hafer", 10, 8);
+		Item b = new Item("salat", 3, 7);
+		Item c = new Item("banana", 5, 4);
+		Item d = new Item("tomato", 6, 1);
+		Item e = new Item("timber", 6, 5);
 
-		Item[] items = new Item[8];
+		Item[] items = new Item[10];
 		items[0] = a;
-
-		items[2] = c;
-		items[7] = d;
-		items[4] = b;
+		items[3] = c;
+		items[6] = d;
+		items[7] = b;
+		items[9] = e;
 
 		Shopping s = new Shopping(items, 10);
 		int cool = s.search("hafer");
@@ -168,7 +205,8 @@ public final class Shopping {
 		System.out.println(cool);
 		System.out.println(s.findMin());
 		System.out.println(s.findMax());
-		System.out.println(Arrays.toString(s.fillBagMax()));
+
+		System.out.println(s.calValue());
 
 	}
 
