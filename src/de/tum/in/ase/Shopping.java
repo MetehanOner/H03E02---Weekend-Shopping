@@ -88,12 +88,14 @@ public final class Shopping {
 			return null;
 		}
 
-		Item itemHolder = new Item("null",9999999,0);
-		Item[] copy = new Item[getShoppingList().length];
-
-		for(int z=0; z < copy.length; z++) {
-			copy[z] = itemHolder;
+		int nullCounter = 0;
+		for(int i=0; i < getShoppingList().length; i++) {
+			if(getShoppingList()[i] == null) {
+				nullCounter++;
+			}
 		}
+
+		Item[] copy = new Item[getShoppingList().length-nullCounter];
 
 		int currentBagCapacity = getBagCapacity();
 
@@ -105,7 +107,7 @@ public final class Shopping {
 				if(getShoppingList()[i].getWeight() <= currentBagCapacity){
 
 					int j = 0;
-					while (j < i && currentItemValue < copy[j].getValue()) {
+					while (j < i && currentItemValue > copy[j].getValue()) {
 						j++;
 					}
 
@@ -117,25 +119,10 @@ public final class Shopping {
 					currentBagCapacity = currentBagCapacity - copy[j].getWeight();
 				}
 
-			} else {
-				getShoppingList()[i] = itemHolder;
 			}
 		}
 
-		int r = 0;
-		boolean found = false;
-
-		while (!found && r < copy.length) {
-			String a = copy[r].getName().toLowerCase().replaceAll("\\s+", "");
-			String b = "null".toLowerCase().replaceAll("\\s+", "");
-			found = Objects.equals(a ,b);
-			r++;
-		}
-
-		int firstNull = r-1;
-		Item[] modifiedArray = Arrays.copyOfRange(copy, 0, firstNull);
-
-		return modifiedArray;
+		return copy;
 	}
 
 
