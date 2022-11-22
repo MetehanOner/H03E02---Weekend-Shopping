@@ -24,10 +24,14 @@ public final class Shopping {
 		}
 
 		while (!found && i < getShoppingList().length) {
-			String a = getShoppingList()[i].getName().toLowerCase().replaceAll("\\s+", "");
-			String b = itemName.toLowerCase().replaceAll("\\s+", "");
-			found = Objects.equals(a ,b);
-			i++;
+			if(!(getShoppingList()[i] == null)) {
+				String a = getShoppingList()[i].getName().toLowerCase().replaceAll("\\s+", "");
+				String b = itemName.toLowerCase().replaceAll("\\s+", "");
+				found = Objects.equals(a, b);
+				i++;
+			} else {
+				i++;
+			}
 		}
 
 		if(!found){
@@ -44,10 +48,18 @@ public final class Shopping {
 			return -1;
 		}
 
-		Item result = getShoppingList()[0];
+		Item result = null;
+		for (int i = 0; i < getShoppingList().length; i++) {
+			if (!(getShoppingList()[i] == null)) {
+				result = getShoppingList()[i];
+				break;
+			}
+		}
+
 		int index = 0;
 		for (int i = 1; i < getShoppingList().length; i++) {
-			if(!(getShoppingList()[i] ==null)){
+			if(!(getShoppingList()[i] == null)){
+				assert result != null;
 				if (getShoppingList()[i].getValue() < result.getValue()) {
 					result = getShoppingList()[i];
 					index = i;
@@ -65,10 +77,19 @@ public final class Shopping {
 			return -1;
 		}
 
-		Item result = getShoppingList()[0];
+		Item result = null;
+		for (int i = 0; i < getShoppingList().length; i++) {
+			if (!(getShoppingList()[i] == null)) {
+				result = getShoppingList()[i];
+				break;
+			}
+		}
+
+
 		int index = 0;
 		for (int i = 1; i < getShoppingList().length; i++) {
 			if(!(getShoppingList()[i] == null)) {
+				assert result != null;
 				if (getShoppingList()[i].getValue() > result.getValue()) {
 					result = getShoppingList()[i];
 					index = i;
@@ -88,23 +109,21 @@ public final class Shopping {
 			return null;
 		}
 
-		int nullCounter = 0;
-		for(int i=0; i < getShoppingList().length; i++) {
-			if(getShoppingList()[i] == null) {
-				nullCounter++;
-			}
-		}
+		Item[] copy = new Item[getShoppingList().length];
+		Item itemHolder = new Item("null",9999999,0);
 
-		Item[] copy = new Item[getShoppingList().length-nullCounter];
+		for(int z=0; z < copy.length; z++) {
+			copy[z] = itemHolder;
+		}
 
 		int currentBagCapacity = getBagCapacity();
 
-		for(int i=0; i < getShoppingList().length; i++){
-			if(!(getShoppingList()[i] == null)){
+		for(int i=0; i < getShoppingList().length; i++) {
+			if(!(getShoppingList()[i] == null)) {
 
 				int currentItemValue = getShoppingList()[i].getValue();
 
-				if(getShoppingList()[i].getWeight() <= currentBagCapacity){
+				//if(currentBagCapacity >= getShoppingList()[i].getWeight()) {
 
 					int j = 0;
 					while (j < i && currentItemValue < copy[j].getValue()) {
@@ -116,13 +135,45 @@ public final class Shopping {
 					}
 
 					copy[j] = getShoppingList()[i];
-					currentBagCapacity = currentBagCapacity - copy[j].getWeight();
-				}
+					//currentBagCapacity = currentBagCapacity - copy[j].getWeight();
 
+				//}
 			}
 		}
 
-		return copy;
+		int nullCounter = 0;
+		for(int i=0; i < copy.length; i++) {
+			if(copy[i].getName() == "null") {
+				nullCounter++;
+			}
+		}
+
+		Item[] master = new Item[copy.length-nullCounter];
+
+		for(int y=0; y < master.length; y++) {
+			master[y] = itemHolder;
+		}
+
+		for(int c=0; c < copy.length; c++) {
+			if(currentBagCapacity >= copy[c].getWeight()) {
+				master[c] = copy[c];
+				currentBagCapacity = currentBagCapacity - copy[c].getWeight();
+			}
+		}
+
+		int o = 0;
+		boolean evreka = false;
+
+		while (!evreka && o < master.length) {
+			String a = master[o].getName().toLowerCase().replaceAll("\\s+", "");
+			String b = "null".toLowerCase().replaceAll("\\s+", "");
+			evreka = Objects.equals(a ,b);
+			o++;
+		}
+
+		int partyNull = o-1;
+
+		return Arrays.copyOfRange(master, 0, partyNull);
 	}
 
 
@@ -159,19 +210,19 @@ public final class Shopping {
 		Item e = new Item("timber", 6, 5);
 
 		Item[] items = new Item[10];
-		items[0] = a;
-		items[3] = c;
-		items[6] = d;
-		items[7] = b;
-		items[9] = e;
+		items[7] = a;
+		items[8] = c;
+		items[9] = d;
+		items[5] = b;
+		items[6] = e;
 
 		Shopping s = new Shopping(items, 10);
 		int cool = s.search("hafer");
 
-
 		System.out.println(cool);
 		System.out.println(s.findMin());
 		System.out.println(s.findMax());
+		System.out.println(s.fillBagMax());
 		System.out.println(s.calValue());
 
 	}
