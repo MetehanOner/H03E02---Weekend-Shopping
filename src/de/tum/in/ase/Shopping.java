@@ -136,9 +136,9 @@ public final class Shopping {
 		}
 
 		int currentBagCapacity = getBagCapacity();
-		for(int i=0; i < modifiedArray.length; i++){
+		for(int i=0; i < newFoundLand.length; i++){
 				if(currentBagCapacity >= modifiedArray[i].getWeight()){
-					if (getBagCapacity() >= currentBagCapacity){
+					if (getBagCapacity() >= currentBagCapacity) {
 						newFoundLand[i] = modifiedArray[i];
 						currentBagCapacity = currentBagCapacity - newFoundLand[i].getWeight();
 					}
