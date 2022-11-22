@@ -98,10 +98,10 @@ public final class Shopping {
 		for(int i=0; i < getShoppingList().length; i++){
 			if(!(getShoppingList()[i] == null)){
 
-				double currentRatio = (double)(getShoppingList()[i].getValue())/(double)(getShoppingList()[i].getWeight());
+				int currentRatio = (getShoppingList()[i].getValue())/(getShoppingList()[i].getWeight());
 
 				int j = 0;
-				while (j < i && currentRatio < (double)(copy[j].getValue())/(double)(copy[j].getWeight())) {
+				while (j < i && currentRatio < (copy[j].getValue())/(copy[j].getWeight())) {
 					j++;
 				}
 
@@ -205,7 +205,6 @@ public final class Shopping {
 		System.out.println(cool);
 		System.out.println(s.findMin());
 		System.out.println(s.findMax());
-
 		System.out.println(s.calValue());
 
 	}
