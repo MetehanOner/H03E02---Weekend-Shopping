@@ -98,10 +98,10 @@ public final class Shopping {
 		for(int i=0; i < getShoppingList().length; i++){
 			if(!(getShoppingList()[i] == null)){
 
-				double currentRatio = (double) (getShoppingList()[i].getValue())/(double)(getShoppingList()[i].getWeight());
+				double currentRatio = (double) (getShoppingList()[i].getValue())/ (double) (getShoppingList()[i].getWeight());
 
 				int j = 0;
-				while (j < i && currentRatio < (double) (copy[j].getValue())/(double) (copy[j].getWeight())) {
+				while (j < i && currentRatio < (double) (copy[j].getValue())/ (double) (copy[j].getWeight())) {
 					j++;
 				}
 
@@ -137,9 +137,11 @@ public final class Shopping {
 
 		int currentBagCapacity = getBagCapacity();
 		for(int i=0; i < modifiedArray.length; i++){
-				if(currentBagCapacity > modifiedArray[i].getWeight()){
-					newFoundLand[i] = modifiedArray[i];
-					currentBagCapacity = currentBagCapacity - newFoundLand[i].getWeight();
+				if(currentBagCapacity >= modifiedArray[i].getWeight()){
+					if (getBagCapacity() >= currentBagCapacity){
+						newFoundLand[i] = modifiedArray[i];
+						currentBagCapacity = currentBagCapacity - newFoundLand[i].getWeight();
+					}
 				}
 		}
 
